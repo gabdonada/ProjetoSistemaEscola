@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const Admins = new Schema({
+const Admin = new Schema({
     id:{
         type: Number,
         require: true
@@ -26,4 +26,4 @@ const Admins = new Schema({
     }
 })
 
-mongoose.model("Admins", Admins)
+mongoose.model("admins", Admin)

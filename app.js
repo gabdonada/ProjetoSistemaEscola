@@ -3,23 +3,27 @@ const express = require('express')
 const handlebars = require('express-handlebars');
 const bodyParser = require("body-parser")
 const app = express()
-const admin = require ("./routes/admin")
+//users
+const admin = require ("./routes/Admin")
+const alunos = require("./routes/Alunos")
+const profs = require("./routes/Prof")
+
 const path = require ("path")
 const mongoose = require('mongoose')
 const session = require("express-session")
 const flash = require("connect-flash")
-require("./models/Postagem")
-const Postagem = mongoose.model("postagens")
-require("./models/Categoria")
-const Categoria = mongoose.model("categorias")
-const usuarios = require("./routes/usuario")
+//require("./models/Postagem")
+//const Postagem = mongoose.model("postagens")
+//require("./models/Categoria")
+//const Categoria = mongoose.model("categorias")
+
 const passport = require("passport")
 require("./config/auth")(passport)
 
 //Configuracoes
     //Sessao
     app.use(session({
-        secret: "cursodenode",
+        secret: "ProjetoSistemaAula",
         resave: true,
         saveUninitialized: true
     }))
@@ -61,6 +65,7 @@ require("./config/auth")(passport)
         })
 
 //Rotas
+    /** 
     app.get('/', (req, res) => {
         Postagem.find().populate("categoria").lean().sort({data: "desc"}).then((postagens)=>{
             res.render("index", {postagens: postagens})
@@ -114,15 +119,17 @@ require("./config/auth")(passport)
         })
     })
 
+    */
     app.get("/404", (req,res)=>{
         res.send('Erro 404!')
     })
 
-    app.get('/posts', (req, res) => {
-        res.send('Lista de Posts')
-    })
-    app.use('/admin', admin) //'/admin' é o prefixo, logo precisa ser adicionar pos url /admin;
-    app.use("/usuarios", usuarios)
+   // app.get('/posts', (req, res) => {
+     //   res.send('Lista de Posts')
+    //})
+    app.use('/Admin', admin) //'/admin' é o prefixo, logo precisa ser adicionar pos url /admin;
+    app.use("/prof", profs)
+    app.use("/aluno", alunos)
     
 //Outros
 const port = 8081

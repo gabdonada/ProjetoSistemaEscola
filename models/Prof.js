@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const Profs = new Schema({
+const Prof = new Schema({
     id:{
         type: Number,
         require: true
@@ -28,4 +28,4 @@ const Profs = new Schema({
     }
 })
 
-mongoose.model("profs", Profs)
+mongoose.model("profs", Prof)
