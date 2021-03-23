@@ -65,6 +65,9 @@ require("./config/auth")(passport)
         })
 
 //Rotas
+    app.get('/', (req,res)=>{
+        
+    })
     /** 
     app.get('/', (req, res) => {
         Postagem.find().populate("categoria").lean().sort({data: "desc"}).then((postagens)=>{
