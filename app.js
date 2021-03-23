@@ -66,7 +66,7 @@ require("./config/auth")(passport)
 
 //Rotas
     app.get('/', (req,res)=>{
-        
+        res.render("/")//irá mudar
     })
     /** 
     app.get('/', (req, res) => {
