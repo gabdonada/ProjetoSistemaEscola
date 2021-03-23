@@ -28,4 +28,4 @@ const Profs = new Schema({
     }
 })
 
-mongoose.model("Profs", Profs)
+mongoose.model("profs", Profs)

@@ -11,7 +11,8 @@ router.get("/criar_aluno", (req,res)=>{
 })
 
 router.post("/criar_aluno", (req,res)=>{
-    var erros = []
+    var erros = [] //array para erros
+    //compara valores do frontend para validacao
     if(!req.body.nome || typeof req.body.nome == undefined || req.body.nome == null){
         erros.push({texto: "Nome invalido"})
     }
@@ -39,6 +40,7 @@ router.post("/criar_aluno", (req,res)=>{
                     turma: req.body.turma
                 })
 
+                //Encripta a senha para evitar hackers
                 bcrypt.genSalt(10, (erro, salt) =>{
                     bcrypt.hash(novoAluno.senha, salt, (erro,hash)=>{
                         if(erro){
@@ -63,3 +65,23 @@ router.post("/criar_aluno", (req,res)=>{
         })
     }
 })
+
+router.get("/login", (req, res)=>{
+    res.render("admin/login")
+})
+
+router.post("/login", (req, res, next)=>{
+    passport.authenticate("local", {
+        successRedirect: "/",
+        failureRedirect: "/admin/login",
+        failureFlash: true
+    })(req, res, next)
+})
+
+router.get("/logout", (req,res)=>{
+    req.logOut()//passport reconhece sozinho
+    req.flash('success_msg', "Deslogado com sucesso")
+    res.redirect("/")
+})
+
+module.exports = router
