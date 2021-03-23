@@ -16,7 +16,8 @@ const Admins = new Schema({
     },
     senha:{
         type: String,
-        required: true
+        required: true,
+        default: "novo_aluno"
     },
     turma:{
         type: String,
