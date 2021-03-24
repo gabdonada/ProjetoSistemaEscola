@@ -66,7 +66,13 @@ require("./config/auth")(passport)
 
 //Rotas
     app.get('/', (req,res)=>{
-        res.render("/")//irá mudar
+        Postagem.find().populate("categoria").lean().sort({data: "desc"}).then((postagens)=>{
+            res.render("index", {postagens: postagens})
+        }).catch((err)=>{
+            //console.log(err)
+            req.flash("error_msg", "Erro ao carregar categorias postagens recentes: "+err)
+            res.redirect("/404")
+        })
     })
      
     app.get('/', (req, res) => {
