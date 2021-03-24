@@ -7,7 +7,7 @@ const bcrypt= require("bcryptjs")
 const passport = require("passport")
 
 router.get("/criar_aluno", (req,res)=>{
-    res.render("views/admin/criar_aluno")
+    res.render("admin/criar_aluno")
 })
 
 router.post("/criar_aluno", (req,res)=>{
@@ -22,16 +22,16 @@ router.post("/criar_aluno", (req,res)=>{
     if(!req.body.turma || typeof req.body.turma == undefined || req.body.turma == null){
         erros.push({texto: "Turma invalido"})
     }
-    if(!req.body.RA || typeof req.body.RA == undefined || req.body.RA == null){
+    if(!req.body.ra || typeof req.body.ra == undefined || req.body.ra == null){
         erros.push({texto: "Registro Acadêmico invalido"})
     }
     if(erros.length>0){
-        res.render("views/admin/criar_aluno", {erros: erros})
+        res.render("/admin/criar_aluno", {erros: erros})
     }else{
         Aluno.findOne({email: req.body.email}).lean().then((Aluno)=>{
             if(Aluno){
                 req.flash("error_msg", "Ja existe um usuário com este email")
-                res.redirect("/views/admin/criar_aluno")
+                res.redirect("/admin/criar_aluno")
             }else{
                 const novoAluno = new Aluno({
                     id: req.body.RA,
@@ -45,7 +45,7 @@ router.post("/criar_aluno", (req,res)=>{
                     bcrypt.hash(novoAluno.senha, salt, (erro,hash)=>{
                         if(erro){
                             req.flash("error_msg", "Erro ao guardar senha: "+err)
-                            res.redirect("/views/admin/criar_aluno")
+                            res.redirect("admin/criar_aluno")
                         }else{
                             novoAluno.senha = hash
                             novoAluno.save().then(()=>{
@@ -53,7 +53,7 @@ router.post("/criar_aluno", (req,res)=>{
                                 res.redirect("/")
                             }).catch((err)=>{
                                 req.flash("error_msg", "Erro ao guardar Aluno: "+err)
-                                res.redirect("/views/admin/criar_aluno")
+                                res.redirect("admin/criar_aluno")
                             })
                         }
                     })

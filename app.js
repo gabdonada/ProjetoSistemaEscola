@@ -50,7 +50,7 @@ require("./config/auth")(passport)
 
     //Mongoose
         mongoose.Promise=global.Promise
-        mongoose.connect("mongodb://localhost/blogapp", {useNewUrlParser: true, useUnifiedTopology: true}).then(()=>{
+        mongoose.connect("mongodb://localhost/ProjetoSistemaEscola", {useNewUrlParser: true, useUnifiedTopology: true}).then(()=>{
             console.log("Conectado ao Mongo")
         }).catch((err)=>{
             console.log("Erro ao Conectar ao Mongo:" + err)
